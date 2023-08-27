@@ -325,9 +325,12 @@ def guess_mime_file_mime (file_prog, filename):
     cmd = [file_prog, "--brief", "--mime-type", filename]
     try:
         mime = backtick(cmd).strip()
-    except OSError:
+    except OSError as e:
         # ignore errors, as file(1) is only a fallback
+        raise AssertionError(f"Error! {e}")
         pass
+    if filename.endswith("t.apk"):
+        raise AssertionError(f"what is this? {mime} {encoding}")
     if mime not in ArchiveMimetypes:
         mime, encoding = None, None
     return mime, encoding
