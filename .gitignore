@@ -2,6 +2,8 @@
 __pycache__
 /.pytest_cache
 /.ruff_cache
+/uv.lock
+/.venv
 
 # build and dist dirs
 /build
@@ -15,7 +17,6 @@ __pycache__
 /.envrc
 
 # local development files
-/bin
 /todo.txt
 /todo.txt.bak
 /done.txt

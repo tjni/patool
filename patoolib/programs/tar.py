@@ -14,9 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the GNU tar program."""
 
+import functools
 import os
 import subprocess
-from .. import util
 
 
 def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
@@ -47,7 +47,7 @@ def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     return cmdlist
 
 
-@util.memoized
+@functools.cache
 def get_tar_opts(cmd, compression, verbosity):
     """Get tar options for cmd according to the given compression and verbosity."""
     cmdlist = []
@@ -64,6 +64,6 @@ def get_tar_opts(cmd, compression, verbosity):
         testcmdlist = [cmd, "--force-local", "--help"]
         from .. import util
 
-        if util.run(testcmdlist, stderr=subprocess.DEVNULL, verbosity=verbosity) == 0:
+        if util.run(testcmdlist, stderr=subprocess.DEVNULL, verbosity=-1) == 0:
             cmdlist.append('--force-local')
     return cmdlist
